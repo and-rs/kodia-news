@@ -1,6 +1,7 @@
-import Header from "@/components/navigation/header"
+import { cn } from "@/lib/utils"
 import type { Metadata } from "next"
 import { ThemeProvider } from "next-themes"
+import { DM_Sans, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -8,13 +9,29 @@ export const metadata: Metadata = {
   description: "Technical test using Sanity CMS and Next.js",
 }
 
+const fontSans = DM_Sans({
+  weight: "variable",
+  subsets: ["latin-ext"],
+  variable: "--font-sans",
+})
+
+const fontMono = JetBrains_Mono({
+  weight: "variable",
+  subsets: ["latin-ext"],
+  variable: "--font-mono",
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(fontSans.variable, fontMono.variable)}
+    >
       <body>
         <ThemeProvider
           disableTransitionOnChange
@@ -22,7 +39,6 @@ export default function RootLayout({
           attribute="class"
           enableSystem
         >
-          <Header />
           {children}
         </ThemeProvider>
       </body>
