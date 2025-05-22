@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "predev": "pnpm run extract && pnpm run typegen",
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "prebuild": "pnpm run extract && pnpm run typegen",
     "build": "next build",
     "start": "next start",
