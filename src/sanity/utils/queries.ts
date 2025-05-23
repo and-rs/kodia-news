@@ -9,6 +9,7 @@ export const articlesQuery = defineQuery(`
     excerpt,
     publishedAt,
     author->{
+      image,
       name,
       "authorSlug": slug.current
     },

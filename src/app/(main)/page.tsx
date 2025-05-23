@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <section className="px-4 space-y-8 max-w-3xl">
-      <h1>News Section</h1>
+      <h1>Latest News</h1>
       <ArticleGrid articles={articles} />
     </section>
   )
