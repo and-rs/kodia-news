@@ -117,7 +117,13 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1 {
+    @apply text-3xl font-medium transition-all -tracking-[0.07em] leading-5;
+  }
   h2 {
     @apply text-2xl font-medium transition-all -tracking-[0.07em] leading-5;
+  }
+  h3 {
+    @apply leading-6 text-lg font-semibold;
   }
 }

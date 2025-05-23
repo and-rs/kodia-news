@@ -1,9 +1,8 @@
+import ArticleGrid from "@/components/articles/article-grid"
 import { client } from "@/sanity/client"
-import { HomepageQueryResult } from "@/sanity/types"
+import { ArticlesQueryResult } from "@/sanity/types"
+import { articlesQuery } from "@/sanity/utils/queries"
 import { Metadata } from "next"
-import { defineQuery } from "next-sanity"
-
-const HomepageQuery = defineQuery(`*[_type == "article"]`)
 
 export const metadata: Metadata = {
   title: "Kodia News",
@@ -11,9 +10,20 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const _ = await client.fetch<HomepageQueryResult>(HomepageQuery)
+  const articles = await client.fetch<ArticlesQueryResult>(articlesQuery)
+
+  if (!articles || articles.length === 0) {
+    return (
+      <section className="flex justify-center items-center">
+        <p>No articles found. Check back later!</p>
+      </section>
+    )
+  }
 
   return (
-    <section className="flex justify-center items-center">Clean slate</section>
+    <section className="px-4 space-y-8 max-w-3xl">
+      <h1>News Section</h1>
+      <ArticleGrid articles={articles} />
+    </section>
   )
 }
