@@ -19,3 +19,5 @@ export const articlesQuery = defineQuery(`
     }
   }
 `)
+
+export const tagsQuery = defineQuery(`*[_type == "tag"]`)

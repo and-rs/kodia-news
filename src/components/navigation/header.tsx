@@ -1,10 +1,27 @@
+import { client } from "@/sanity/client"
+import { type TagsQueryResult } from "@/sanity/types"
+import { tagsQuery } from "@/sanity/utils/queries"
 import { ThemeSwitch } from "../theme-switch"
+import { Button } from "../ui/button"
 
-export default function Header() {
+export default async function Header() {
+  const tags = await client.fetch<TagsQueryResult>(tagsQuery)
+
   return (
-    <nav className="flex fixed z-50 flex-col gap-4 justify-center items-center p-4 w-full border-b md:flex-row md:justify-between md:p-6 bg-background">
-      <h2>Kodia News</h2>
-      <ThemeSwitch />
+    <nav className="flex fixed z-50 flex-row gap-4 justify-between items-center p-4 w-full border-b md:justify-between md:p-6 bg-background">
+      <div className="flex gap-2 items-center">
+        <h2>Kodia News</h2>
+        <ThemeSwitch />
+      </div>
+      {tags && tags.length > 1 && (
+        <div className="flex gap-2">
+          {tags.map((tag, idx) => (
+            <Button variant={"link"} key={idx} className="text-md">
+              {tag.name}
+            </Button>
+          ))}
+        </div>
+      )}
     </nav>
   )
 }
