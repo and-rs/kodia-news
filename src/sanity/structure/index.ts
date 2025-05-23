@@ -1,5 +1,5 @@
-import { Newspaper, User } from "lucide-react";
-import { StructureBuilder, StructureResolver } from "sanity/structure";
+import { Newspaper, Tag as TagIcon, User } from "lucide-react"
+import { StructureBuilder, StructureResolver } from "sanity/structure"
 
 export const structure: StructureResolver = (S: StructureBuilder) => {
   return S.list()
@@ -12,7 +12,7 @@ export const structure: StructureResolver = (S: StructureBuilder) => {
           S.documentList()
             .title("Articles")
             .filter("_type == $type")
-            .params({ type: "article" })
+            .params({ type: "article" }),
         ),
       S.divider(),
       S.listItem()
@@ -22,7 +22,17 @@ export const structure: StructureResolver = (S: StructureBuilder) => {
           S.documentList()
             .title("Authors")
             .filter("_type == $type")
-            .params({ type: "author" })
+            .params({ type: "author" }),
         ),
-    ]);
-};
+      S.divider(),
+      S.listItem()
+        .title("Tags")
+        .icon(TagIcon)
+        .child(
+          S.documentList()
+            .title("Tags")
+            .filter("_type == $type")
+            .params({ type: "tag" }),
+        ),
+    ])
+}
