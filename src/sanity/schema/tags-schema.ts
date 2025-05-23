@@ -12,6 +12,16 @@ export const tagSchema = defineType({
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "name",
+        slugify: (input: string) => input.toLowerCase().replace(/\s+/g, "-"),
+      },
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "color",
       title: "Color",
       type: "string",

@@ -20,4 +20,32 @@ export const articlesQuery = defineQuery(`
   }
 `)
 
-export const tagsQuery = defineQuery(`*[_type == "tag"]`)
+export const tagsQuery = defineQuery(`
+  *[_type == "tag"]{
+    _id,
+    name,
+    "slug": slug.current
+  }
+`)
+
+export const tagsPageQuery = defineQuery(`
+  *[_type=="article" && references(
+    *[_type=="tag" && slug.current == $slug]._id
+  )] | order(publishedAt desc){
+    _id,
+    title,
+    "slug": slug.current,
+    image,
+    excerpt,
+    publishedAt,
+    author->{
+      image,
+      name,
+      "authorSlug": slug.current
+    },
+    tags[]->{
+      name,
+      color
+    }
+  }
+`)
