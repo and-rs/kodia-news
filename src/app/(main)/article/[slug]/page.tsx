@@ -1,4 +1,5 @@
 import ArticleAuthor from "@/components/articles/article-author"
+import BackHome from "@/components/navigation/back-home"
 import { Badge } from "@/components/ui/badge"
 import { client } from "@/sanity/client"
 import { ArticlePageQueryResult } from "@/sanity/types"
@@ -35,7 +36,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   return (
-    <div className="mx-4 space-y-4">
+    <div className="flex flex-col gap-6 mx-4">
+      <BackHome />
       <h1 className="tracking-tight leading-10">{article?.title}</h1>
       <hr />
       <div className="flex flex-wrap gap-4 justify-between items-center">
