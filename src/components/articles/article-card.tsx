@@ -23,7 +23,7 @@ export default function ArticleCard({ article, showAuthor = true }: Props) {
           <div className="flex flex-col gap-4">
             <Link
               href={`/article/${article.slug}`}
-              className="hover:underline underline-offset-3"
+              className="hover:underline underline-offset-3 text-foreground"
             >
               <h3>{article.title}</h3>
             </Link>
