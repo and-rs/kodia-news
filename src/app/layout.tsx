@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import type { Metadata } from "next"
 import { ThemeProvider } from "next-themes"
-import { DM_Sans, JetBrains_Mono } from "next/font/google"
+import { DM_Sans, Fragment_Mono } from "next/font/google"
 import Head from "next/head"
 import "./globals.css"
 
@@ -16,8 +16,8 @@ const fontSans = DM_Sans({
   variable: "--font-sans",
 })
 
-const fontMono = JetBrains_Mono({
-  weight: "variable",
+const fontMono = Fragment_Mono({
+  weight: "400",
   subsets: ["latin-ext"],
   variable: "--font-mono",
 })
