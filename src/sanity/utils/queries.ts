@@ -49,3 +49,28 @@ export const tagsPageQuery = defineQuery(`
     }
   }
 `)
+
+export const articlePageQuery = defineQuery(` 
+    *[_type == "article" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    image,
+    excerpt,
+    content,
+    publishedAt,
+    author->{
+      _id,
+      bio,
+      name,
+      image,
+      "authorSlug": slug.current
+    },
+    tags[]->{
+      _id,
+      name,
+      color,
+      "tagSlug": slug.current
+    }
+  }
+`)
