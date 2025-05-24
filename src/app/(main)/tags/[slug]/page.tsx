@@ -6,7 +6,7 @@ import { tagsPageQuery } from "@/sanity/utils/queries"
 import { TagsPageQueryResult } from "@/sanity/types"
 
 interface TagPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -19,8 +19,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: TagPageProps): Promise<Metadata> {
-  const resolvedParams = await params
-  const { slug } = resolvedParams
+  const { slug } = await params
 
   const tag = await client.fetch<{ name: string } | null>(
     `*[_type=="tag" && slug.current == $slug][0]{ name }`,
@@ -41,8 +40,7 @@ export async function generateMetadata({
 }
 
 export default async function TagsPage({ params }: TagPageProps) {
-  const resolvedParams = await params
-  const { slug } = resolvedParams
+  const { slug } = await params
 
   const tag = await client.fetch<{ name: string } | null>(
     `*[_type=="tag" && slug.current == $slug][0]{ name }`,
