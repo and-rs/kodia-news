@@ -2,8 +2,9 @@ import { ArticlesQueryResult } from "@/sanity/types"
 import imageUrlFor from "@/sanity/utils/img-builder"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"
+import Link from "next/link"
 
-function getInitials(name?: string | null): string {
+export function getInitials(name?: string | null): string {
   if (!name) return "?"
   const parts = name.trim().split(" ")
   if (!parts[1]) return parts[0][0]
@@ -29,9 +30,11 @@ export default function ArticleAuthor({
         {image && <AvatarImage src={image} />}
         <AvatarFallback>{authorInitials}</AvatarFallback>
       </Avatar>
-      <Button variant={"link"} className="p-0 h-fit">
-        {author.name}
-      </Button>
+      <Link href={`/author/${author.authorSlug}`}>
+        <Button variant={"link"} className="p-0 h-fit">
+          {author.name}
+        </Button>
+      </Link>
     </div>
   )
 }

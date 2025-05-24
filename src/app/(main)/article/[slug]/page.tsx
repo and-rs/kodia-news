@@ -38,12 +38,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <div className="mx-4 space-y-4">
       <h1 className="tracking-tight leading-10">{article?.title}</h1>
       <hr />
-      <div className="flex gap-4 items-center">
-        {article?.author && <ArticleAuthor author={article.author} />}
+      <div className="flex flex-wrap gap-4 justify-between items-center">
+        <div className="flex flex-row gap-4">
+          {article?.author && <ArticleAuthor author={article.author} />}
 
-        <div className="flex items-center text-muted-foreground">
-          <Calendar className="mr-1 w-4 h-4" />
-          <span className="text-sm">{formatDate(article.publishedAt)}</span>
+          <div className="flex items-center text-muted-foreground">
+            <Calendar className="mr-1 w-4 h-4" />
+            {article.publishedAt && (
+              <span className="text-sm">{formatDate(article.publishedAt)}</span>
+            )}
+          </div>
         </div>
         {article.tags &&
           article.tags.map((tag) => (
@@ -55,9 +59,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
       <div className="flow-root">
         {article.image && (
-          <div className="overflow-hidden w-full xs:float-right xs:max-w-80">
+          <div className="overflow-hidden w-full xs:float-right xs:max-w-80 xs:my-4 xs:ml-4">
             <Image
-              className="object-cover w-full h-full rounded border xs:my-4 xs:ml-4"
+              className="object-cover w-full h-full rounded border"
               blurDataURL={imageUrlFor(article.image).width(100).url()}
               src={imageUrlFor(article.image).width(800).url()}
               alt={article.image.alt!}
