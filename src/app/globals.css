@@ -128,4 +128,7 @@
   h3 {
     @apply leading-6 text-lg font-semibold;
   }
+  a {
+    @apply flex items-center text-sm text-muted-foreground hover:text-primary;
+  }
 }
