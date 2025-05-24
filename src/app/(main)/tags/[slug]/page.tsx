@@ -70,7 +70,7 @@ export default async function TagsPage({ params }: TagPageProps) {
 
   return (
     <section className="px-4 space-y-8">
-      <h1 className="text-2xl font-semibold">News tagged: {tag.name}</h1>
+      <h1 className="text-2xl font-semibold">Latest news in {tag.name}</h1>
       <ArticleGrid articles={articles} />
     </section>
   )
