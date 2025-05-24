@@ -1,3 +1,4 @@
+// src/sanity/utils/queries.ts
 import { defineQuery } from "next-sanity"
 
 export const articlesQuery = defineQuery(`
@@ -50,7 +51,7 @@ export const tagsPageQuery = defineQuery(`
   }
 `)
 
-export const articlePageQuery = defineQuery(` 
+export const articlePageQuery = defineQuery(`
     *[_type == "article" && slug.current == $slug][0] {
     _id,
     title,
@@ -71,6 +72,40 @@ export const articlePageQuery = defineQuery(`
       name,
       color,
       "tagSlug": slug.current
+    }
+  }
+`)
+
+export const authorPageQuery = defineQuery(`
+  *[_type == "author" && slug.current == $slug][0] {
+    _id,
+    name,
+    "slug": slug.current,
+    image,
+    bio,
+    email,
+    social {
+      twitter,
+      website
+    },
+    "articles": *[_type == "article" && author._ref == ^._id] | order(publishedAt desc) {
+      _id,
+      title,
+      "slug": slug.current,
+      excerpt,
+      image,
+      publishedAt,
+      author->{
+        image,
+        name,
+        "authorSlug": slug.current
+      },
+      tags[]->{
+        _id,
+        name,
+        "tagSlug": slug.current,
+        color
+      }
     }
   }
 `)
