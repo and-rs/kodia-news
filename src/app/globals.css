@@ -120,13 +120,13 @@
     @apply bg-background text-foreground;
   }
   h1 {
-    @apply text-3xl font-medium transition-all -tracking-[0.07em] leading-5;
+    @apply text-3xl font-medium transition-all -tracking-[0.07em] leading-5 text-foreground;
   }
   h2 {
-    @apply text-2xl font-medium transition-all -tracking-[0.07em] leading-5;
+    @apply text-2xl font-medium transition-all -tracking-[0.07em] leading-5 text-foreground;
   }
   h3 {
-    @apply leading-6 text-lg font-semibold;
+    @apply leading-6 text-lg font-semibold text-foreground;
   }
   a {
     @apply flex items-center text-sm text-muted-foreground hover:text-primary;
