@@ -15,14 +15,14 @@ export default function ArticleCard(article: ArticlesQueryResult[number]) {
     <Card className="overflow-hidden p-0 max-w-3xl h-fit">
       <div className="flex flex-col-reverse xs:flex-row">
         <div className="flex flex-col justify-between p-4">
-          <div className="space-y-2">
+          <div className="flex flex-col gap-4">
             <Link
               href={`/article/${article.slug}`}
               className="hover:underline underline-offset-3"
             >
               <h3>{article.title}</h3>
             </Link>
-            <p>{article.excerpt}</p>
+            <p className="text-sm">{article.excerpt}</p>
           </div>
           <div className="flex justify-between mt-8 md:mt-4">
             <ArticleAuthor author={article.author} />
