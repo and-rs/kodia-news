@@ -6,7 +6,12 @@ import { Badge } from "../ui/badge"
 import { Card } from "../ui/card"
 import ArticleAuthor from "./article-author"
 
-export default function ArticleCard(article: ArticlesQueryResult[number]) {
+interface Props {
+  article: ArticlesQueryResult[number]
+  showAuthor?: boolean
+}
+
+export default function ArticleCard({ article, showAuthor = true }: Props) {
   if (!article) {
     return null
   }
@@ -22,10 +27,10 @@ export default function ArticleCard(article: ArticlesQueryResult[number]) {
             >
               <h3>{article.title}</h3>
             </Link>
-            <p className="text-sm">{article.excerpt}</p>
+            <p className="text-sm text-muted-foreground">{article.excerpt}</p>
           </div>
           <div className="flex justify-between mt-8 md:mt-4">
-            <ArticleAuthor author={article.author} />
+            {showAuthor && <ArticleAuthor author={article.author} />}
             <div className="flex gap-2 items-center">
               {article.tags?.map((tag, idx) => (
                 <Badge color={tag.color ?? "default"} variant={"tag"} key={idx}>
