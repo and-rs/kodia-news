@@ -7,9 +7,50 @@ import { AuthorPageQueryResult } from "@/sanity/types"
 import imageUrlFor from "@/sanity/utils/img-builder"
 import { authorPageQuery } from "@/sanity/utils/queries"
 import { ExternalLink, LucideMail } from "lucide-react"
+import { notFound } from "next/navigation"
 
 type AuthorPageProps = {
   params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: AuthorPageProps) {
+  const resolvedParams = await params
+  const { slug } = resolvedParams
+
+  const author = await client.fetch<AuthorPageQueryResult>(authorPageQuery, {
+    slug,
+  })
+
+  if (!author || !author.name) {
+    return {
+      title: "Author Not Found - Kodia News",
+      description: "The author profile you are looking for could not be found.",
+    }
+  }
+
+  const siteName = "Kodia News"
+  const pageTitle = `${author.name} - ${siteName}`
+
+  const description =
+    author.bio || `Profile of ${author.name}, an author at ${siteName}.`
+  const imageUrl = author.image
+    ? imageUrlFor(author.image).width(1200).height(630).url()
+    : undefined
+
+  const authorUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/author/${author.slug}`
+
+  return {
+    title: pageTitle,
+    description,
+    openGraph: {
+      title: author.name,
+      description: description,
+      url: authorUrl,
+      type: "profile",
+      siteName: siteName,
+      images: imageUrl ? [{ url: imageUrl }] : undefined,
+    },
+  }
 }
 
 export default async function AuthorPage({ params }: AuthorPageProps) {
@@ -20,7 +61,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   })
 
   if (!author) {
-    return <h3>No author found.</h3>
+    notFound()
   }
 
   const authorInitials = getInitials(author?.name)

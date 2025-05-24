@@ -15,6 +15,42 @@ type ArticlePageProps = {
   params: Promise<{ slug: string }>
 }
 
+export async function generateMetadata({ params }: ArticlePageProps) {
+  const { slug } = await params
+  const article = await client.fetch<ArticlePageQueryResult>(articlePageQuery, {
+    slug,
+  })
+
+  if (!article || !article.title) {
+    return {
+      title: "Article Not Found - Kodia News",
+      description: "The article you are looking for could not be found.",
+    }
+  }
+
+  const siteName = "Kodia News"
+  const pageTitle = `${article.title} - ${siteName}`
+  const description = article.excerpt || article.title
+  const imageUrl = article.image
+    ? imageUrlFor(article.image).width(1200).height(630).url()
+    : undefined
+
+  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/article/${article.slug}`
+
+  return {
+    title: pageTitle,
+    description,
+    openGraph: {
+      title: article.title,
+      description: description,
+      url: articleUrl,
+      type: "article",
+      siteName: siteName,
+      images: imageUrl ? [{ url: imageUrl }] : undefined,
+    },
+  }
+}
+
 function formatDate(dateString: string) {
   const date = new Date(dateString)
   return new Intl.DateTimeFormat("en-US", {
